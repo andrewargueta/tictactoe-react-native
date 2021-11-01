@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "rn-fb-uvuew",
+    "slug": "rn-fb-uvuew",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "rn-fb-uvuew"
+}
