@@ -1,20 +1,24 @@
-import firebase from 'firebase';
-import '@firebase/auth';
-import '@firebase/firestore';
+import * as firebase from 'firebase';
+import 'firebase/auth';
+import 'firebase/firestore';
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyBhBl-xrvGc1FHBTsM-9_m_M2EOFRQk4LM",
-    authDomain: "rn-app-ded6a.firebaseapp.com",
-    projectId: "rn-app-ded6a",
-    storageBucket: "rn-app-ded6a.appspot.com",
-    messagingSenderId: "428065091912",
-    appId: "1:428065091912:web:77e6457a231e05a270c37d",
-    measurementId: "G-71TYCCH8PD"
-  };
+  apiKey: "AIzaSyBhBl-xrvGc1FHBTsM-9_m_M2EOFRQk4LM",
+  authDomain: "rn-app-ded6a.firebaseapp.com",
+  projectId: "rn-app-ded6a",
+  storageBucket: "rn-app-ded6a.appspot.com",
+  messagingSenderId: "428065091912",
+  appId: "1:428065091912:web:77e6457a231e05a270c37d",
+  measurementId: "G-71TYCCH8PD"
+};
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
+
+let app;
+if (firebase.apps.length === 0) {
+    app = firebase.initializeApp(firebaseConfig);
+} else {
+    app = firebase.app();
 }
-
-export default firebase ;
+const db = app.firestore();
+const auth = firebase.auth();
+export { firebase, db, auth };

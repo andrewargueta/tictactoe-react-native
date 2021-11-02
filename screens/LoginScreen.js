@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
-import firebase from '../firebase/firebaseConfig';
+import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator } from 'react-native';
+import Header from '../components/Header'
+import {auth} from '../firebase/firebaseConfig';
 
 
-export default class RegisterScreen extends Component {
+export default class LoginScreen extends Component {
   
   constructor() {
     super();
     this.state = { 
-      displayName: '',
       email: '', 
       password: '',
       isLoading: false
@@ -21,57 +21,53 @@ export default class RegisterScreen extends Component {
     this.setState(state);
   }
 
-  registerUser = () => {
-    if(this.state.email === '' || this.state.password === '' || this.state.displayName === '') {
-      alert('Enter all details');
+  goHome = () =>{
+    this.props.navigation.navigate('Home')
+  }
+
+  userLogin = () => {
+    if(this.state.email === '' || this.state.password === '') {
+      alert('Enter all details to login!')
     } else {
       this.setState({
         isLoading: true,
       })
-      firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      auth
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then((res) => {
-        res.user.updateProfile({
-          displayName: this.state.displayName
-        })
-        console.log('User registered successfully!')
+        console.log(res)
+        console.log('User logged-in successfully!')
         this.setState({
           isLoading: false,
         })
-        this.props.navigation.navigate('Home')
+        this.props.navigation.navigate('Game')
       })
       .catch((error) => {
         alert(error);
         window.location.reload(false);
-      })      
+      })    
     }
   }
 
   render() {
     if(this.state.isLoading){
       return(
-        <View style={styles.preloader}>
+        <View style={styles.loading}>
           <ActivityIndicator size="large" color="#9E9E9E"/>
         </View>
       )
     }    
     return (
       <View style={styles.container}>  
+        <Header />
         <TextInput
-          style={styles.inputStyle}
-          placeholder="Display Name"
-          value={this.state.displayName}
-          onChangeText={(val) => this.updateInputVal(val, 'displayName')}
-        />      
-        <TextInput
-          style={styles.inputStyle}
+          style={styles.textInput}
           placeholder="Email"
           value={this.state.email}
           onChangeText={(val) => this.updateInputVal(val, 'email')}
         />
         <TextInput
-          style={styles.inputStyle}
+          style={styles.textInput}
           placeholder="Password"
           value={this.state.password}
           onChangeText={(val) => this.updateInputVal(val, 'password')}
@@ -79,15 +75,19 @@ export default class RegisterScreen extends Component {
           secureTextEntry={true}
         />   
         <Button
-          color="#3740FE"
-          title="Register"
-          onPress={this.registerUser}
-        />
-
+          color="skyblue"
+          title="Login"
+          onPress={this.userLogin}
+        />   
+        <Button
+          color="red"
+          title="Cancel"
+          onPress={this.goHome}
+        />  
         <Text 
-          style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('Login')}>
-          Already Registered? Click here to login
+          style={styles.register}
+          onPress={() => this.props.navigation.navigate('Register')}>
+          Don't have account? Click here to signup
         </Text>                          
       </View>
     );
@@ -99,24 +99,24 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    alignItems: "center",
     padding: 35,
-    backgroundColor: '#fff'
+    backgroundColor: '#F5FCFF'
   },
-  inputStyle: {
+  textInput: {
     width: '100%',
     marginBottom: 15,
     paddingBottom: 15,
     alignSelf: "center",
-    borderColor: "#ccc",
+    borderColor: "skyblue",
     borderBottomWidth: 1
   },
-  loginText: {
-    color: '#3740FE',
+  register: {
+    color: 'skyblue',
     marginTop: 25,
     textAlign: 'center'
   },
-  preloader: {
+  loading: {
     left: 0,
     right: 0,
     top: 0,
