@@ -5,12 +5,13 @@ import { GAME_RESULT_NO, GAME_RESULT_USER, GAME_RESULT_AI, GAME_RESULT_TIE } fro
 
 
 export default class PromptArea extends Component {
+  /** Returns a text based on who won  */
   generateResultText(result) {
     switch (result) {
       case GAME_RESULT_USER:
         return 'You won the game!'
       case GAME_RESULT_AI:
-        return 'AI won the game!'
+        return 'Computer won the game!'
       case GAME_RESULT_TIE:
         return 'Tie!'
       default:
@@ -22,11 +23,11 @@ export default class PromptArea extends Component {
     const { result, onRestart } = this.props
     return (
       <View>
-        <Text style={styles.text}>{ this.generateResultText(result) }</Text>
+        <Text style={styles.result}>{ this.generateResultText(result) }</Text>
         {
           result !== GAME_RESULT_NO && (
             <TouchableOpacity onPress={() => onRestart()}>
-              <Text style={styles.instructions}>
+              <Text style={styles.prompt}>
                 Touch here to play again
               </Text>
             </TouchableOpacity>
@@ -38,13 +39,13 @@ export default class PromptArea extends Component {
 }
 
 const styles = StyleSheet.create({
-  text: {
+  result: {
     marginTop: 20,
     fontSize: 19,
     fontWeight: 'bold',
     textAlign: 'center'
   },
-  instructions: {
+  prompt: {
     marginTop: 20,
     color: 'grey',
     marginBottom: 5,

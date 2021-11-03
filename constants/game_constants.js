@@ -10,7 +10,7 @@ export const CENTER_POINTS = [
   { x: 213, y:213 },
 ]
 
-export const AREAS = [
+export const BOX_AREAS = [
   { startX: 3, startY: 3, endX : 103, endY: 103, id: 0 },
   { startX: 106, startY: 3, endX : 206, endY: 103, id: 1 },
   { startX: 209, startY: 3, endX : 309, endY: 103, id: 2 },
@@ -22,7 +22,7 @@ export const AREAS = [
   { startX: 209, startY: 209, endX : 309, endY: 309, id: 8 },
 ]
 
-export const CONDITIONS = [
+export const WIN_CONDITIONS = [
   [0, 1, 2], //Top diagonal win
   [3, 4, 5], //Middle diagonal win
   [6, 7, 8], //Bottom diagonal win

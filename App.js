@@ -1,5 +1,3 @@
-// App.js
-
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -20,23 +18,19 @@ function AppStack() {
       >
       <Stack.Screen 
         name="Register" 
-        component={RegisterScreen} 
-        
+        component={RegisterScreen}   
       />       
       <Stack.Screen 
         name="Login" 
-        component={LoginScreen} 
-        
+        component={LoginScreen}   
       />
       <Stack.Screen 
        name="Home" 
-       component={HomeScreen} 
-       
+       component={HomeScreen}  
       />
       <Stack.Screen 
        name="Game" 
-       component={GameScreen} 
-       
+       component={GameScreen}  
       />
     </Stack.Navigator>
   );

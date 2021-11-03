@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React, { Component } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 
 import {auth, db} from '../firebase/firebaseConfig';
 
@@ -13,22 +13,24 @@ export default class ScoreBoard extends Component {
         }
       }
 
-    getUsersGames = (id) =>{
-        var scoresRef = db.collection('scores').doc(auth.currentUser.uid).get().then(snapshot => {  
-            this.setState({  
-                        wins: snapshot.data().wins,
-                        losses: snapshot.data().losses,
-                        draws: snapshot.data().draws
-                    })
-        })
-        .catch(function(error) {
-            console.log("Error getting documents: ", error);
-        });; 
+    /** If a game is over, we update the wins, losses, draws and display them  */
+    componentDidUpdate(){
+      if(auth.currentUser){
+        db.collection('scores').doc(auth.currentUser.uid).get().then(snapshot => {  
+          this.setState({  
+                      wins: snapshot.data().wins,
+                      losses: snapshot.data().losses,
+                      draws: snapshot.data().draws
+                  })
+      })
+      .catch(function(error) {
+          console.log("Error getting documents: ", error);
+      });; 
+      }
     }
-  
+
     render() {
-        if(auth.currentUser)
-            this.getUsersGames(auth.currentUser.uid)
+        
         return (
             <View>
               <Text style={styles.scores}>

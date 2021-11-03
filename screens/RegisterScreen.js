@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator } from 'react-native';
 import {auth, db} from '../firebase/firebaseConfig';
-import Header from '../components/Header'
+import Logo from '../components/Logo'
 
 
 export default class RegisterScreen extends Component {
@@ -12,23 +12,24 @@ export default class RegisterScreen extends Component {
       displayName: '',
       email: '', 
       password: '',
-      wins:0,
-      losses:0,
-      draws: 0,
       isLoading: false
     }
   }
 
-  updateInputVal = (val, prop) => {
+  /** Updates state based on input */
+  changeInput = (val, prop) => {
     const state = this.state;
     state[prop] = val;
     this.setState(state);
   }
 
-  goHome = () =>{
+  /** Goes to home page */
+  goHome(){
     this.props.navigation.navigate('Home')
   }
-  registerUser = () => {
+
+  /** Registers user */
+  handleRegister(){
     if(this.state.email === '' || this.state.password === '' || this.state.displayName === '') {
       alert('Enter all details');
     } else {
@@ -43,9 +44,9 @@ export default class RegisterScreen extends Component {
         })
         db.collection("scores").doc(res.user.uid).set({
           userId: res.user.uid,
-          wins: this.state.wins,
-          losses: this.state.losses ,
-          draws: this.state.draws
+          wins: 0,
+          losses: 0,
+          draws: 0
       })
         console.log('User registered successfully!')
         this.setState({
@@ -70,36 +71,36 @@ export default class RegisterScreen extends Component {
     }    
     return (
       <View style={styles.container}>  
-        <Header />
+        <Logo />
         <TextInput
-          style={styles.textInpu}
+          style={styles.textInput}
           placeholder="Display Name"
           value={this.state.displayName}
-          onChangeText={(val) => this.updateInputVal(val, 'displayName')}
+          onChangeText={(val) => this.changeInput(val, 'displayName')}
         />      
         <TextInput
-          style={styles.textInpu}
+          style={styles.textInput}
           placeholder="Email"
           value={this.state.email}
-          onChangeText={(val) => this.updateInputVal(val, 'email')}
+          onChangeText={(val) => this.changeInput(val, 'email')}
         />
         <TextInput
-          style={styles.textInpu}
+          style={styles.textInput}
           placeholder="Password"
           value={this.state.password}
-          onChangeText={(val) => this.updateInputVal(val, 'password')}
+          onChangeText={(val) => this.changeInput(val, 'password')}
           maxLength={15}
           secureTextEntry={true}
         />   
         <Button
-          color="skyblue"
+          color="#2BC3D5"
           title="Register"
-          onPress={this.registerUser}
+          onPress={()=>this.handleRegister()}
         />
         <Button
-          color="red"
+          color="#F2545B"
           title="Cancel"
-          onPress={this.goHome}
+          onPress={()=>this.goHome()}
         />
         <Text 
           style={styles.login}
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     padding: 35,
     backgroundColor: '#F5FCFF'
   },
-  textInpu: {
+  textInput: {
     width: '100%',
     marginBottom: 15,
     paddingBottom: 15,
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1
   },
   login: {
-    color: 'skyblue',
+    color: '#2BC3D5',
     marginTop: 25,
     textAlign: 'center'
   },

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, Button, ActivityIndicator } from 'react-native';
-import Header from '../components/Header'
+import Logo from '../components/Logo'
 import {auth} from '../firebase/firebaseConfig';
 
 
@@ -15,17 +15,20 @@ export default class LoginScreen extends Component {
     }
   }
 
-  updateInputVal = (val, prop) => {
+  /** Updates state onn change */
+  changeInput = (val, prop) => {
     const state = this.state;
     state[prop] = val;
     this.setState(state);
   }
 
-  goHome = () =>{
+  /** Goes to home page */
+  goHome(){
     this.props.navigation.navigate('Home')
   }
 
-  userLogin = () => {
+  /** Logs in user */
+  handleLogin(){
     if(this.state.email === '' || this.state.password === '') {
       alert('Enter all details to login!')
     } else {
@@ -59,30 +62,30 @@ export default class LoginScreen extends Component {
     }    
     return (
       <View style={styles.container}>  
-        <Header />
+        <Logo />
         <TextInput
           style={styles.textInput}
           placeholder="Email"
           value={this.state.email}
-          onChangeText={(val) => this.updateInputVal(val, 'email')}
+          onChangeText={(val) => this.changeInput(val, 'email')}
         />
         <TextInput
           style={styles.textInput}
           placeholder="Password"
           value={this.state.password}
-          onChangeText={(val) => this.updateInputVal(val, 'password')}
+          onChangeText={(val) => this.changeInput(val, 'password')}
           maxLength={15}
           secureTextEntry={true}
         />   
         <Button
-          color="skyblue"
+          color="#2BC3D5"
           title="Login"
-          onPress={this.userLogin}
+          onPress={()=>this.handleLogin()}
         />   
         <Button
-          color="red"
+          color="#F2545B"
           title="Cancel"
-          onPress={this.goHome}
+          onPress={()=>this.goHome()}
         />  
         <Text 
           style={styles.register}
@@ -101,18 +104,18 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     padding: 35,
-    backgroundColor: '#F5FCFF'
+    backgroundColor: "#F5FCFF"
   },
   textInput: {
     width: '100%',
     marginBottom: 15,
     paddingBottom: 15,
     alignSelf: "center",
-    borderColor: "skyblue",
+    borderColor: "#2BC3D5",
     borderBottomWidth: 1
   },
   register: {
-    color: 'skyblue',
+    color: '#2BC3D5',
     marginTop: 25,
     textAlign: 'center'
   },

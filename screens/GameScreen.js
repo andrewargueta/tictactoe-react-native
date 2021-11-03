@@ -3,7 +3,7 @@ import { StyleSheet, Button, View } from 'react-native'
 
 import {auth} from '../firebase/firebaseConfig';
 
-import Header from '../components/Header'
+import Logo from '../components/Logo'
 import GameBoard from '../components/GameBoard'
 
 
@@ -12,7 +12,8 @@ export default class App extends Component {
   constructor() {
     super()
   }
-  
+
+  /** Signs user out */
   signOut = () => {
     auth.signOut().then(() => {
       this.props.navigation.navigate('Home')
@@ -25,10 +26,10 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Header />
+        <Logo />
         <GameBoard />
         <Button
-          color="skyblue"
+          color="#F2545B"
           title="Sign Out"
           onPress={this.signOut}
         /> 
@@ -41,16 +42,6 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flex: 1,
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    marginTop: 50,
-  },
-  instructions: {
-    textAlign: 'center',
-    marginTop: 20,
-    color: 'grey',
-    marginBottom: 5,
-  },
+    backgroundColor: "#F5FCFF",
+  }
 })
